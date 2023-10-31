@@ -12,7 +12,8 @@ function has_ssh_private_key(; env::AbstractDict=ENV)
 end
 
 function api_retry(f::Function)
-    delays = ExponentialBackOff(; n=10, max_delay=30.0)
+    # delays = ExponentialBackOff(; n=10, max_delay=30.0) # TODO: uncomment this line
+    delays = ExponentialBackOff(; n=1, max_delay=30.0) # TODO: delete this line
     return retry(f; delays)()
 end
 
