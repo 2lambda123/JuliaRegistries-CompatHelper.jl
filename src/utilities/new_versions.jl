@@ -278,6 +278,7 @@ function make_pr_for_new_version(
         if commit_was_success
             @info("Commit was a success")
             api_retry() do
+                # TODO: fix this invocation of `git_push()`
                 @mock git_push(
                     "origin", new_branch_name, pkey_filename; force=true, env=env
                 )
@@ -341,6 +342,7 @@ function force_ci_trigger(
         # Force push the changes to trigger the PR
         api_retry() do
             @debug "force_ci_trigger: force-pushing the changes to trigger CI on the PR"
+            # TODO: review this invocation of `git_push()`:
             @mock git_push("origin", branch_name, pkey_filename; force=true, env=env, forge=api, ci_cfg=ci_cfg, repo=repo)
         end
     end
