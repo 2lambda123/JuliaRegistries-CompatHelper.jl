@@ -21,14 +21,14 @@ function get_git_name_and_email(; env=ENV)
 end
 
 function git_push(
-    forge::Forge,
-    ci_cfg::CIService,
-    repo::GitHub.Repo,
     remote::AbstractString,
     branch::AbstractString,
     pkey_filename::Union{AbstractString,Nothing}=nothing;
     force=false,
     env=ENV,
+    forge::Union{Forge, Nothing} = nothing,
+    ci_cfg::Union{CIService, Nothing} = nothing,
+    repo::Union{GitHub.Repo, GitLab.Project, Nothing} = nothing,
 )
     force_flag = force ? ["-f"] : []
     name, email = get_git_name_and_email(; env=env)
@@ -42,6 +42,11 @@ function git_push(
     if isnothing(pkey_filename)
         true_remote = remote
     else
+        # If
+        forge::Forge
+        ci_cfg::CIService
+        repo::Union{GitHub.Repo,GitLab.Project}
+
         # We need to convert the remote URL to SSH format.
         # Otherwise, the SSH private key will be ignored.
         true_remote = get_url_for_ssh(forge, ci_cfg, repo)
