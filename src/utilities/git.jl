@@ -23,12 +23,12 @@ end
 function git_push(
     remote::AbstractString,
     branch::AbstractString,
-    pkey_filename::Union{AbstractString, Nothing} = nothing;
+    pkey_filename::Union{AbstractString,Nothing}=nothing;
     force=false,
     env=ENV,
-    forge::Union{Forge, Nothing} = nothing,
-    ci_cfg::Union{CIService, Nothing} = nothing,
-    repo::Union{GitHub.Repo, GitLab.Project, Nothing} = nothing,
+    forge::Union{Forge,Nothing}=nothing,
+    ci_cfg::Union{CIService,Nothing}=nothing,
+    repo::Union{GitHub.Repo,GitLab.Project,Nothing}=nothing,
 )
     force_flag = force ? ["-f"] : []
     name, email = get_git_name_and_email(; env=env)
@@ -37,7 +37,7 @@ function git_push(
     ssh = enable_ssh_verbose_b ? "ssh -vvvv" : "ssh"
     git_ssh_command = isnothing(pkey_filename) ? ssh : "$(ssh) -i $pkey_filename"
 
-    env2 = copy(ENV);
+    env2 = copy(ENV)
     env2["GIT_SSH_COMMAND"] = git_ssh_command
     if isnothing(pkey_filename)
         true_remote = remote
