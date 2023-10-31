@@ -23,7 +23,7 @@ end
 function git_push(
     remote::AbstractString,
     branch::AbstractString,
-    pkey_filename::Union{AbstractString,Nothing}=nothing;
+    pkey_filename::Union{AbstractString, Nothing} = nothing;
     force=false,
     env=ENV,
     forge::Union{Forge, Nothing} = nothing,
@@ -42,7 +42,8 @@ function git_push(
     if isnothing(pkey_filename)
         true_remote = remote
     else
-        # If
+        # If `pkey_filename` is not `nothing`, then `forge`, `ci_cfg`, and `repo`
+        # must all be not `nothing`.
         forge::Forge
         ci_cfg::CIService
         repo::Union{GitHub.Repo,GitLab.Project}
