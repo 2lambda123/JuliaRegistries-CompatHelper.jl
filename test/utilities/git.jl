@@ -45,7 +45,6 @@ QQDtEmQvWdgz+HtIuTG1ySJ9FYO6LeCEXHtQX78aOfNaj2jqLTXHdqrMr0V5exJcNV4XSc
                     output = read(`git log --decorate`, String)
                     @test !occursin(pushed_str, output)
 
-                    # TODO: fix the signature of `git_push` here
                     CompatHelper.git_push("origin", "master")
 
                     output = read(`git log --decorate`, String)
@@ -71,7 +70,6 @@ QQDtEmQvWdgz+HtIuTG1ySJ9FYO6LeCEXHtQX78aOfNaj2jqLTXHdqrMr0V5exJcNV4XSc
                     output = read(`git log --decorate`, String)
                     @test !occursin(pushed_str, output)
 
-                    # TODO: fix the signature of `git_push` here
                     CompatHelper.git_push("origin", "master")
 
                     output = read(`git log --decorate`, String)
@@ -84,7 +82,6 @@ QQDtEmQvWdgz+HtIuTG1ySJ9FYO6LeCEXHtQX78aOfNaj2jqLTXHdqrMr0V5exJcNV4XSc
                         `git -c user.name=user -c user.email=email commit --amend --no-edit -m "Message 2"`,
                     )
 
-                    # TODO: fix the signature of `git_push` here
                     CompatHelper.git_push("origin", "master"; force=true)
                     output = read(`git log --decorate`, String)
                     @test occursin(pushed_str, output)
@@ -117,7 +114,6 @@ QQDtEmQvWdgz+HtIuTG1ySJ9FYO6LeCEXHtQX78aOfNaj2jqLTXHdqrMr0V5exJcNV4XSc
                     output = read(`git log --decorate`, String)
                     @test !occursin(pushed_str, output)
 
-                    # TODO: fix the signature of `git_push` here
                     CompatHelper.git_push("origin", "master", pkey)
 
                     output = read(`git log --decorate`, String)
