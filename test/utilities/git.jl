@@ -114,6 +114,7 @@ QQDtEmQvWdgz+HtIuTG1ySJ9FYO6LeCEXHtQX78aOfNaj2jqLTXHdqrMr0V5exJcNV4XSc
                     output = read(`git log --decorate`, String)
                     @test !occursin(pushed_str, output)
 
+                    # TODO: fix this invocation of `git_push()`
                     CompatHelper.git_push("origin", "master", pkey)
 
                     output = read(`git log --decorate`, String)
