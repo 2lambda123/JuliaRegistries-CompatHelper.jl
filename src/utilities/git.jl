@@ -21,6 +21,9 @@ function get_git_name_and_email(; env=ENV)
 end
 
 function git_push(
+    forge::Forge,
+    ci_cfg::CIService,
+    repo::GitHub.Repo,
     remote::AbstractString,
     branch::AbstractString,
     pkey_filename::Union{AbstractString,Nothing}=nothing;
@@ -36,7 +39,14 @@ function git_push(
 
     env2 = copy(ENV);
     env2["GIT_SSH_COMMAND"] = git_ssh_command
-    cmd = `git -c user.name="$name" -c user.email="$email" -c committer.name="$name" -c committer.email="$email" push $force_flag $remote $branch`
+    if isnothing(pkey_filename)
+        true_remote = remote
+    else
+        # We need to convert the remote URL to SSH format.
+        # Otherwise, the SSH private key will be ignored.
+        true_remote = get_url_for_ssh(forge, ci_cfg, repo)
+    end
+    cmd = `git -c user.name="$name" -c user.email="$email" -c committer.name="$name" -c committer.email="$email" push $force_flag $true_remote $branch`
     @debug "Attempting to run Git push command" cmd env2["GIT_SSH_COMMAND"]
     run(setenv(cmd, env2))
 
